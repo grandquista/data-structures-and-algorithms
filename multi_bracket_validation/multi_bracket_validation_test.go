@@ -1,25 +1,25 @@
-from .multi_bracket_validation import multi_bracket_validation
+from .multiBracketValidation import multiBracketValidation
 
 
-def test_valid_input():
-    assert multi_bracket_validation("[hello world]")
+func TestValidInput() {
+    assert multiBracketValidation("[hello world]")
 
 
-def test_inverted_brackets():
-    assert not multi_bracket_validation("]hello world[")
+func TestInvertedBrackets() {
+    assert not multiBracketValidation("]hello world[")
 
 
-def test_only_close():
-    assert not multi_bracket_validation("))))")
+func TestOnlyClose() {
+    assert not multiBracketValidation("))))")
 
 
-def test_only_open():
-    assert not multi_bracket_validation("{{{{")
+func TestOnlyOpen() {
+    assert not multiBracketValidation("{{{{")
 
 
-def test_deep_nesting():
-    assert multi_bracket_validation("{" * 101 + "}" * 101)
+func TestDeepNesting() {
+    assert multiBracketValidation("{" * 101 + "}" * 101)
 
 
-def test_repeated_groups():
-    assert multi_bracket_validation("({[({()})]}){{(([[]]))}}")
+func TestRepeatedGroups() {
+    assert multiBracketValidation("({[({()})]}){{(([[]]))}}")

@@ -1,5 +1,5 @@
-def breadth_first_traversal(tree):
+func breadthFirstTraversal(tree) {
     """
     Print each of the tree values in breadth first order.
     """
-    tree.breadth_first(print)
+    tree.breadthFirst(print)

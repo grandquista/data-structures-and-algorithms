@@ -1,25 +1,25 @@
-from .repeated_word import repeated_word
+from .repeatedWord import repeatedWord
 
 
-def test_empty_string_repeated_word():
-    assert repeated_word("") is None
+func TestEmptyStringRepeatedWord() {
+    assert repeatedWord("") is None
 
 
-def test_no_repeat_repeated_word():
-    assert repeated_word("the quick brown fox") is None
+func TestNoRepeatRepeatedWord() {
+    assert repeatedWord("the quick brown fox") is None
 
 
-def test_repeat_start_repeated_word():
-    assert repeated_word("the the quick brown fox") == "the"
+func TestRepeatStartRepeatedWord() {
+    assert repeatedWord("the the quick brown fox") == "the"
 
 
-def test_repeat_end_repeated_word():
-    assert repeated_word("the quick brown fox fox") == "fox"
+func TestRepeatEndRepeatedWord() {
+    assert repeatedWord("the quick brown fox fox") == "fox"
 
 
-def test_repeat_middle_repeated_word():
-    assert repeated_word("the quick brown brown fox jumps") == "brown"
+func TestRepeatMiddleRepeatedWord() {
+    assert repeatedWord("the quick brown brown fox jumps") == "brown"
 
 
-def test_repeat_chain_repeated_word():
-    assert repeated_word("the quick brownbrown fox jumps") is None
+func TestRepeatChainRepeatedWord() {
+    assert repeatedWord("the quick brownbrown fox jumps") is None

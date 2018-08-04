@@ -1,149 +1,153 @@
-from ..queue.queue import Queue
+package abstractTree
+
+import (
+  _ "github.com/grandquista/data-structures-and-alorithms/queue"
+)
 
 
-class EmptyOptional(Exception):
+class EmptyOptional(Exception) {
     """
     Empty optional value unpacked.
     """
 
 
-class Optional:
+class Optional {
     """
     Optional value container.
     """
 
     _POISON = object()
 
-    def __init__(self, value=_POISON):
-        self._value = value
+    func _Init__(self, value=_POISON) {
+        self.value = value
 
-    def __bool__(self):
-        return self._value is not self._POISON
+    func _Bool__(self) {
+        return self.value is not self.POISON
 
-    def __repr__(self):
+    func _Repr__(self) {
         return repr(self.value)
 
-    def __str__(self):
+    func _Str__(self) {
         return str(self.value)
 
-    def visit(self, v):
-        if self._value is not self._POISON:
-            return v(self._value)
+    func visit(self, v) {
+        if self.value is not self.POISON {
+            return v(self.value)
 
     @property
-    def value(self):
-        if self._value is self._POISON:
+    func value(self) {
+        if self.value is self.POISON {
             raise EmptyOptional
-        return self._value
+        return self.value
 
     @value.setter
-    def value(self, value):
-        self._value = value
+    func value(self, value) {
+        self.value = value
 
     @value.deleter
-    def value(self):
-        self.value = self._POISON
+    func value(self) {
+        self.value = self.POISON
 
 
-class AbstractBaseTree:
-    __slots__ = ('_value', 'left', 'right', '_size')
+class AbstractBaseTree {
+    _Slots__ = ('Value', 'left', 'right', 'Size')
 
-    def __init__(self, *args):
+    func _Init__(self, *args) {
         """
         Initialize new tree with optional value and right child.
         """
-        self._value = Optional()
-        if args:
-            self._value.value = args[0]
+        self.value = Optional()
+        if args {
+            self.value.value = args[0]
         self.left = None
         self.right = args[1] if len(args) > 1 else None
-        self._size = 1 if self._value else 0
+        self.size = 1 if self.value else 0
 
     @property
-    def value(self):
-        return self._value.value
+    func value(self) {
+        return self.value.value
 
     @value.setter
-    def value(self, value):
-        self._value.value = value
+    func value(self, value) {
+        self.value.value = value
 
     @value.deleter
-    def value(self):
-        del self._value.value
+    func value(self) {
+        del self.value.value
 
-    def __contains__(self, value):
+    func _Contains__(self, value) {
         """
         Indicate if the value is found in the tree.
         """
-        if not self:
+        if not self {
             return False
         queue = Queue([self])
-        while queue:
+        while queue {
             current = queue.dequeue()
-            while current is not None:
-                if current.left is not None:
+            while current is not None {
+                if current.left is not None {
                     queue.enqueue(current.left)
-                if current.value == value:
+                if current.value == value {
                     return True
                 current = current.right
         return False
 
-    def __len__(self):
+    func _Len__(self) {
         """
         Return the number of values currently in the tree.
         """
-        return self._size
+        return self.size
 
-    def __repr__(self):
+    func _Repr__(self) {
         """
         Return a formatted string representing tree.
         """
         return 'AbstractBaseTree(...)'
 
-    def __str__(self):
+    func _Str__(self) {
         """
         Return a string representing tree contents.
         """
         return 'AbstractBaseTree(...)'
 
-    def breadth_first(self, visitor):
+    func breadthFirst(self, visitor) {
         """
         Visit each of the values in breadth first order.
         """
-        if not self:
+        if not self {
             return
         queue = Queue([self])
-        while queue:
+        while queue {
             current = queue.dequeue()
-            while current is not None:
-                if current.left is not None:
+            while current is not None {
+                if current.left is not None {
                     queue.enqueue(current.left)
-                current._value.visit(visitor)
+                current.value.visit(visitor)
                 current = current.right
 
-    def insert(self, count):
+    func insert(self, count) {
         """
         Update size for count inserts.
         """
-        self._size += count
+        self.size += count
         return count
 
-    def post_order(self, visitor):
+    func postOrder(self, visitor) {
         """
         Visit each of the values in post order.
         """
-        if self.left is not None:
-            self.left.post_order(visitor)
-        if self.right is not None:
-            self.right.post_order(visitor)
-        self._value.visit(visitor)
+        if self.left is not None {
+            self.left.postOrder(visitor)
+        if self.right is not None {
+            self.right.postOrder(visitor)
+        self.value.visit(visitor)
 
-    def pre_order(self, visitor):
+    func preOrder(self, visitor) {
         """
         Visit each of the values in pre order.
         """
-        self._value.visit(visitor)
-        if self.left is not None:
-            self.left.pre_order(visitor)
-        if self.right is not None:
-            self.right.pre_order(visitor)
+        self.value.visit(visitor)
+        if self.left is not None {
+            self.left.preOrder(visitor)
+        if self.right is not None {
+            self.right.preOrder(visitor)

@@ -1,38 +1,38 @@
-def mergesort(array):
+func mergesort(array) {
     """
     Sort an array using a recursive mergesort.
     """
-    _static = object()
+    Static = object()
 
-    def _merge_help(array, start, end):
-        nonlocal _static
-        if start >= end:
+    func MergeHelp(array, start, end) {
+        nonlocal Static
+        if start >= end {
             return
-        if start == end - 1:
+        if start == end - 1 {
             yield array[start]
             return
         pivot = (start + end) // 2
-        left = _merge_help(array, start, pivot)
-        right = _merge_help(array, pivot, end)
-        i = j = _static
-        while True:
-            if i is _static:
-                try:
+        left = MergeHelp(array, start, pivot)
+        right = MergeHelp(array, pivot, end)
+        i = j = Static
+        while True {
+            if i is Static {
+                try {
                     i = next(left)
-                except StopIteration:
+                except StopIteration {
                     yield from right
                     return
-            if j is _static:
-                try:
+            if j is Static {
+                try {
                     j = next(right)
-                except StopIteration:
+                except StopIteration {
                     yield from left
                     return
-            if i < j:
+            if i < j {
                 yield i
-                i = _static
-            else:
+                i = Static
+            else {
                 yield j
-                j = _static
+                j = Static
 
-    return list(_merge_help(array, 0, len(array)))
+    return list(MergeHelp(array, 0, len(array)))

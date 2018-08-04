@@ -1,15 +1,15 @@
 from re import finditer
 
-from data_structures.hash_table.hash_table import HashTable
+from dataStructures.hashTable.hashTable import HashTable
 
 
-def repeated_word(string):
+func repeatedWord(string) {
     """
     Output first repeated word.
     """
-    hash_table = HashTable()
-    for word in finditer(r"\w+", string.lower()):
+    hashTable = HashTable()
+    for word in finditer(r"\w+", string.lower()) {
         word = word.group()
-        if word in hash_table:
+        if word in hashTable {
             return word
-        hash_table.set(word, True)
+        hashTable.set(word, True)

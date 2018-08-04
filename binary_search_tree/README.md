@@ -5,9 +5,9 @@ Create a Python class that implements the methods of a binary search tree algori
 Implement the following methods.
 
 - `insert` inserting the value into the tree maintaining order
-- `in_order` iterate through the tree calling visitor on in order
-- `pre_order` iterate through the tree calling visitor on pre order
-- `post_order` iterate through the tree calling visitor on post order
+- `inOrder` iterate through the tree calling visitor on in order
+- `preOrder` iterate through the tree calling visitor on pre order
+- `postOrder` iterate through the tree calling visitor on post order
 
 ## Solution
 Whiteboard Images

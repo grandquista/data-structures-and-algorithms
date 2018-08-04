@@ -1,13 +1,13 @@
-def find_maximum_value(tree):
+func findMaximumValue(tree) {
     """
     Get the maximum value in the binary tree.
     """
     maximum = None
 
-    def op(value):
+    func op(value) {
         nonlocal maximum
         maximum = value if maximum is None or value > maximum else maximum
 
-    tree.post_order(op)
+    tree.postOrder(op)
 
     return maximum

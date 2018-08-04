@@ -1,59 +1,53 @@
-from ..linked_node.node import Node
+package queue
 
+import (
+	"errors"
 
-class Queue:
-    def __init__(self, it=()):
-        """
-        Initialize new list with optional iterable.
-        """
-        self.head = None
-        self._size = 0
+	"github.com/grandquista/data-structures-and-algorithms/node"
+)
 
-        for value in it:
-            self.enqueue(value)
+// Queue queue.
+type Queue struct {
+	Head *node.Node
+	size int
+}
 
-    def __repr__(self):
-        """
-        Return a formatted string representing Queue.
-        """
-        if self.head:
-            return f"Queue(..., { self.head.value !r})"
-        return f"Queue()"
+// MakeQueue Initialize new list with optional iterable.
+func MakeQueue(it []interface{}) *Queue {
+	queue := Queue{}
+	for _, elem := range it {
+		queue.Enqueue(elem)
+	}
+	return &queue
+}
 
-    def __str__(self):
-        """
-        Return a string representing Queue.
-        """
-        if self.head:
-            return f"Queue head: { self.head.value }, size: { self._size }"
-        return f"Empty queue"
+// Len Return the number of values currently in the queue.
+func (queue Queue) Len() int {
+	return queue.size
+}
 
-    def __len__(self):
-        """
-        Return the number of values currently in the queue.
-        """
-        return self._size
+// Dequeue Retrieve and remove the earliest item from the queue.
+func (queue *Queue) Dequeue() (interface{}, error) {
+	if queue.Head == nil {
+		return nil, errors.New("empty queue")
+	}
+	node := queue.Head
+	if node.Next == nil {
+		queue.Head = nil
+		queue.size -= 1
+		return node.Value, nil
+	}
+	for node.Next.Next != nil {
+		node = node.Next
+	}
+	final := node.Next
+	node.Next = nil
+	queue.size -= 1
+	return final.Value, nil
+}
 
-    def dequeue(self):
-        """
-        Retrieve and remove the earliest item from the queue.
-        """
-        if not self.head:
-            raise IndexError("")
-        node = self.head
-        if not node._next:
-            self.head = None
-            self._size -= 1
-            return node.value
-        while node._next._next:
-            node = node._next
-        node._next, node = None, node._next
-        self._size -= 1
-        return node.value
-
-    def enqueue(self, value):
-        """
-        Insert a value into the queue.
-        """
-        self.head = Node(value, self.head)
-        self._size += 1
+// Enqueue Insert a value into the queue.
+func (queue *Queue) Enqueue(value interface{}) {
+	queue.Head = node.MakeNode(value, queue.Head)
+	queue.size += 1
+}

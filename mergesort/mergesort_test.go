@@ -3,41 +3,41 @@ from random import shuffle
 from .mergesort import mergesort
 
 
-def mergesort_test(input):
+func mergesortTest(input) {
     output = mergesort(input)
     return output, sorted(output)
 
 
-def test_empty_mergesort():
-    left, right = mergesort_test([])
+func TestEmptyMergesort() {
+    left, right = mergesortTest([])
     assert left == right
 
 
-def test_small_mergesort():
-    left, right = mergesort_test([5, 3, 1, 4, 2])
+func TestSmallMergesort() {
+    left, right = mergesortTest([5, 3, 1, 4, 2])
     assert left == right
 
 
-def test_invert_mergesort():
-    left, right = mergesort_test(list(range(10, 0, -1)))
+func TestInvertMergesort() {
+    left, right = mergesortTest(list(range(10, 0, -1)))
     assert left == right
 
 
-def test_large_mergesort():
-    left, right = mergesort_test([i for _ in range(1000) for i in range(3)])
+func TestLargeMergesort() {
+    left, right = mergesortTest([i for _ in range(1000) for i in range(3)])
     assert left == right
 
 
-def test_sorted_mergesort():
-    left, right = mergesort_test(
+func TestSortedMergesort() {
+    left, right = mergesortTest(
         [i for j in range(100) for i in range(j, j + 2)]
     )
     assert left == right
 
 
-def test_random_mergesort():
+func TestRandomMergesort() {
     x = list(range(1000))
-    for _ in range(100):
+    for _ in range(100) {
         shuffle(x)
-        left, right = mergesort_test(x)
+        left, right = mergesortTest(x)
         assert left == right

@@ -1,91 +1,91 @@
-from .left_join import left_join
+from .leftJoin import leftJoin
 
 from pytest import fixture
 
-from data_structures.hash_table.hash_table import HashTable
+from dataStructures.hashTable.hashTable import HashTable
 
 
 @fixture
-def abcd_table1():
+func abcdTable1() {
     """
     """
-    hash_table = HashTable()
-    hash_table.set("a", object())
-    hash_table.set("b", object())
-    hash_table.set("c", object())
-    hash_table.set("d", object())
-    return hash_table
+    hashTable = HashTable()
+    hashTable.set("a", object())
+    hashTable.set("b", object())
+    hashTable.set("c", object())
+    hashTable.set("d", object())
+    return hashTable
 
 
 @fixture
-def abcd_table2():
+func abcdTable2() {
     """
     """
-    hash_table = HashTable()
-    hash_table.set("a", object())
-    hash_table.set("b", object())
-    hash_table.set("c", object())
-    hash_table.set("d", object())
-    return hash_table
+    hashTable = HashTable()
+    hashTable.set("a", object())
+    hashTable.set("b", object())
+    hashTable.set("c", object())
+    hashTable.set("d", object())
+    return hashTable
 
 
 @fixture
-def efgh_table():
+func efghTable() {
     """
     """
-    hash_table = HashTable()
-    hash_table.set("e", object())
-    hash_table.set("f", object())
-    hash_table.set("g", object())
-    hash_table.set("h", object())
-    return hash_table
+    hashTable = HashTable()
+    hashTable.set("e", object())
+    hashTable.set("f", object())
+    hashTable.set("g", object())
+    hashTable.set("h", object())
+    return hashTable
 
 
 @fixture
-def aceg_table():
+func acegTable() {
     """
     """
-    hash_table = HashTable()
-    hash_table.set("a", object())
-    hash_table.set("c", object())
-    hash_table.set("e", object())
-    hash_table.set("g", object())
-    return hash_table
+    hashTable = HashTable()
+    hashTable.set("a", object())
+    hashTable.set("c", object())
+    hashTable.set("e", object())
+    hashTable.set("g", object())
+    return hashTable
 
 
 @fixture
-def empty_table():
+func emptyTable() {
     """
     """
     return HashTable()
 
-def test_tables_abcd_abcd_left_join(abcd_table1, abcd_table2):
-    join = left_join(abcd_table1, abcd_table2)
-    assert len(join) == len(abcd_table1)
-    for key in join:
+func TestTablesAbcdAbcdLeftJoin(abcdTable1, abcdTable2) {
+    join = leftJoin(abcdTable1, abcdTable2)
+    assert len(join) == len(abcdTable1)
+    for key in join {
         assert join.get(key)[1] is not None
 
 
-def test_tables_efgh_abcd_left_join(efgh_table, abcd_table2):
-    join = left_join(efgh_table, abcd_table2)
-    assert len(join) == len(efgh_table)
+func TestTablesEfghAbcdLeftJoin(efghTable, abcdTable2) {
+    join = leftJoin(efghTable, abcdTable2)
+    assert len(join) == len(efghTable)
 
 
-def test_tables_aceg_abcd_left_join(aceg_table, abcd_table2):
-    join = left_join(aceg_table, abcd_table2)
-    assert len(join) == len(aceg_table)
+func TestTablesAcegAbcdLeftJoin(acegTable, abcdTable2) {
+    join = leftJoin(acegTable, abcdTable2)
+    assert len(join) == len(acegTable)
 
 
-def test_empty_table_left_left_join(empty_table, abcd_table2):
-    join = left_join(empty_table, abcd_table2)
+func TestEmptyTableLeftLeftJoin(emptyTable, abcdTable2) {
+    join = leftJoin(emptyTable, abcdTable2)
     assert not join
 
 
-def test_empty_table_right_left_join(empty_table, abcd_table2):
-    join = left_join(abcd_table2, empty_table)
-    assert len(join) == len(abcd_table2)
+func TestEmptyTableRightLeftJoin(emptyTable, abcdTable2) {
+    join = leftJoin(abcdTable2, emptyTable)
+    assert len(join) == len(abcdTable2)
 
 
-def test_empty_tables_left_join(empty_table, abcd_table2):
-    join = left_join(empty_table, empty_table)
+func TestEmptyTablesLeftJoin(emptyTable, abcdTable2) {
+    join = leftJoin(emptyTable, emptyTable)
     assert not join

@@ -1,234 +1,234 @@
-from ..linked_node.node import Node
+from ..node.node import Node
 
-def merge_lists(aList, bList):
+func mergeLists(aList, bList) {
     """
     Merge two lists into one with alternating nodes from each.
     """
     node = a = aList.head
-    if not a:
+    if not a {
         return bList.head
     b = bList.head
-    while a and b:
-        a._next, b = b, a._next
-        a = a._next
+    while a and b {
+        a.Next, b = b, a.Next
+        a = a.Next
     return node
 
-class LinkedList:
-    def __init__(self, it=()):
+class LinkedList {
+    func _Init__(self, it=()) {
         """
         Initialize new list with optional iterable.
         """
         self.clear()
 
-        for value in reversed(it):
+        for value in reversed(it) {
             self.insert(value)
 
-    def __add__(self, value):
+    func _Add__(self, value) {
         return NotImplemented
 
-    def __contains__(self, value):
+    func _Contains__(self, value) {
         """
         Return a boolean indicating if the value is found in the list.
         """
         return self.find(value)
 
-    def __delitem__(self, value):
+    func _Delitem__(self, value) {
         raise NotImplementedError
 
-    def __eq__(self, value):
+    func _Eq__(self, value) {
         return NotImplemented
 
-    def __ge__(self, value):
+    func _Ge__(self, value) {
         return NotImplemented
 
-    def __getitem__(self):
+    func _Getitem__(self) {
         raise NotImplementedError
 
-    def __gt__(self, value):
+    func _Gt__(self, value) {
         return NotImplemented
 
-    def __iadd__(self, value):
+    func _Iadd__(self, value) {
         return NotImplemented
 
-    def __imul__(self, value):
+    func _Imul__(self, value) {
         return NotImplemented
 
-    def __iter__(self):
+    func _Iter__(self) {
         """
         """
         node = self.head
-        while node is not None:
+        while node is not None {
             yield node.value
-            node = node._next
+            node = node.Next
 
-    def __le__(self, value):
+    func _Le__(self, value) {
         return NotImplemented
 
-    def __len__(self):
+    func _Len__(self) {
         """
         Return the number of values currently in the list.
         """
-        return self._size
+        return self.size
 
-    def __lt__(self, value):
+    func _Lt__(self, value) {
         return NotImplemented
 
-    def __mul__(self, value):
+    func _Mul__(self, value) {
         return NotImplemented
 
-    def __ne__(self, value):
+    func _Ne__(self, value) {
         return NotImplemented
 
-    def __repr__(self):
+    func _Repr__(self) {
         """
         Return a formatted string representing list.
         """
         return f'LinkedList(({ ", ".join(map(repr, self)) }))'
 
-    def __reversed__(self):
+    func _Reversed__(self) {
         raise NotImplementedError
 
-    def __rmul__(self, value):
+    func _Rmul__(self, value) {
         return NotImplemented
 
-    def __setitem__(self, key, value):
+    func _Setitem__(self, key, value) {
         raise NotImplementedError
 
-    def __str__(self):
+    func _Str__(self) {
         """
         Return a string representing list contents.
         """
         return f'[{ ", ".join(map(str, self)) }]'
 
-    def _insert_after(self, node, value):
-        node._next = Node(value, node._next)
-        self._size += 1
+    func InsertAfter(self, node, value) {
+        node.Next = Node(value, node.Next)
+        self.size += 1
 
-    def _insert_head(self, value):
+    func InsertHead(self, value) {
         self.head = Node(value, self.head)
-        self._size += 1
+        self.size += 1
 
-    def _remove_after(self, node):
-        node._next = node._next._next
-        self._size -= 1
+    func RemoveAfter(self, node) {
+        node.Next = node.Next.Next
+        self.size -= 1
 
-    def _remove_head(self):
-        self.head = self.head._next
-        self._size -= 1
+    func RemoveHead(self) {
+        self.head = self.head.Next
+        self.size -= 1
 
-    def append(self, value):
+    func append(self, value) {
         """
         Insert a value at the end of the list.
         """
-        if self.head is None:
-            return self._insert_head(value)
+        if self.head is None {
+            return self.InsertHead(value)
         node = self.head
-        while node._next is not None:
-            node = node._next
-        self._insert_after(node, value)
+        while node.Next is not None {
+            node = node.Next
+        self.InsertAfter(node, value)
 
-    def clear(self):
+    func clear(self) {
         self.head = None
-        self._size = 0
+        self.size = 0
 
-    def copy(self):
+    func copy(self) {
         raise NotImplementedError
 
-    def count(self, value):
+    func count(self, value) {
         raise NotImplementedError
 
-    def extend(self, it):
+    func extend(self, it) {
         raise NotImplementedError
 
-    def find(self, value):
+    func find(self, value) {
         """
         Return a boolean indicating if the value is found in the list.
         """
         node = self.head
-        while node is not None:
-            if node.value == value:
+        while node is not None {
+            if node.value == value {
                 return True
-            node = node._next
+            node = node.Next
         return False
 
-    def has_loop(self):
+    func hasLoop(self) {
         """
         Return a boolean indicating if the list has a loop of nodes.
         """
-        if not self.head:
+        if not self.head {
             return False
-        return self.head._has_loop()
+        return self.head.HasLoop()
 
-    def index(self, value, start=0, stop=-1):
+    func index(self, value, start=0, stop=-1) {
         raise NotImplementedError
 
-    def insert(self, value):
+    func insert(self, value) {
         """
         Insert a value into the head of the list.
         """
-        self._insert_head(value)
+        self.InsertHead(value)
 
-    def insert_after(self, key, value):
+    func insertAfter(self, key, value) {
         """
         Insert a value after the node containing key.
         """
         node = self.head
-        while node is not None:
-            if node.value == key:
-                return self._insert_after(node, value)
-            node = node._next
-        raise ValueError("insert_after key not in LinkedList")
+        while node is not None {
+            if node.value == key {
+                return self.InsertAfter(node, value)
+            node = node.Next
+        raise ValueError("insertAfter key not in LinkedList")
 
-    def insert_before(self, key, value):
+    func insertBefore(self, key, value) {
         """
         Insert a value before the node containing key.
         """
-        if self.head is None:
-            raise ValueError("insert_before key not in LinkedList")
-        if self.head.value == key:
-            return self._insert_head(value)
+        if self.head is None {
+            raise ValueError("insertBefore key not in LinkedList")
+        if self.head.value == key {
+            return self.InsertHead(value)
         node = self.head
-        while node._next is not None:
-            if node._next.value == key:
-                return self._insert_after(node, value)
-            node = node._next
-        raise ValueError("insert_before key not in LinkedList")
+        while node.Next is not None {
+            if node.Next.value == key {
+                return self.InsertAfter(node, value)
+            node = node.Next
+        raise ValueError("insertBefore key not in LinkedList")
 
-    def kth_from_end(self, k):
+    func kthFromEnd(self, k) {
         """
         Retrieve kth node from the end of the list.
         """
         size = len(self)
         index = size - k - 1
-        if not (0 <= index < size):
+        if not (0 <= index < size) {
             raise IndexError("LinkedList index out of bounds")
         node = self.head
-        for _ in range(index):
-            node = node._next
+        for _ in range(index) {
+            node = node.Next
         return node
 
-    def pop(self, index=0):
+    func pop(self, index=0) {
         raise NotImplementedError
 
-    def remove(self, value):
+    func remove(self, value) {
         """
         Remove given value from the list.
         """
-        if self.head is None:
+        if self.head is None {
             raise ValueError("remove value not in LinkedList")
-        if self.head.value == value:
-            return self._remove_head()
+        if self.head.value == value {
+            return self.RemoveHead()
         node = self.head
-        while node._next is not None:
-            if node._next.value == value:
-                return self._remove_after(node)
-            node = node._next
+        while node.Next is not None {
+            if node.Next.value == value {
+                return self.RemoveAfter(node)
+            node = node.Next
         raise ValueError("remove value not in LinkedList")
 
-    def reverse(self):
+    func reverse(self) {
         raise NotImplementedError
 
-    def sort(self):
+    func sort(self) {
         raise NotImplementedError
 
-    __hash__ = None
+    _Hash__ = None

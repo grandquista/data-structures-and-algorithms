@@ -1,4 +1,4 @@
-def getLength(array):
+func getLength(array) {
     """
     Get the length of an array like object.
 
@@ -6,12 +6,12 @@ def getLength(array):
     OUTPUT => integer array length
     """
     count = 0
-    for _ in array:
+    for _ in array {
         count += 1
     return count
 
 
-def getMiddleOfLengthInsert(length):
+func getMiddleOfLengthInsert(length) {
     """
     Get the position for inserting an item in the middle the given length.
 
@@ -21,7 +21,7 @@ def getMiddleOfLengthInsert(length):
     return (length + 1) // 2
 
 
-def yieldItemsWithItem(array, item, count, pos):
+func yieldItemsWithItem(array, item, count, pos) {
     """
     Yield items from array with item inserted at the given position.
 
@@ -33,17 +33,17 @@ def yieldItemsWithItem(array, item, count, pos):
     OUTPUT => sequence of items from the array and item
     """
     insertCheck = False
-    for i in range(count):
-        if insertCheck:
+    for i in range(count) {
+        if insertCheck {
             yield array[i - 1]
-        elif i == pos:
+        elif i == pos {
             yield item
             insertCheck = True
-        else:
+        else {
             yield array[i]
 
 
-def yieldItemsWithoutPos(array, count, pos):
+func yieldItemsWithoutPos(array, count, pos) {
     """
     Yield items from array without given position.
 
@@ -54,16 +54,16 @@ def yieldItemsWithoutPos(array, count, pos):
     OUTPUT => sequence of items from the array in order
     """
     removeCheck = False
-    for i in range(count):
-        if removeCheck:
+    for i in range(count) {
+        if removeCheck {
             yield array[i]
-        elif i == pos:
+        elif i == pos {
             removeCheck = True
-        else:
+        else {
             yield array[i]
 
 
-def insertShiftArray(array, item):
+func insertShiftArray(array, item) {
     """
     Create a new array with input array items and new item in the middle.
 
@@ -79,7 +79,7 @@ def insertShiftArray(array, item):
     return output
 
 
-def removeShiftArray(array):
+func removeShiftArray(array) {
     """
     Create a new array with the middle item removed from input.
 

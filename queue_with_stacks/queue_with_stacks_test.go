@@ -1,83 +1,83 @@
 from pytest import raises
 
-from .queue_with_stacks import Queue
+from .queueWithStacks import Queue
 from pytest import fixture
 
 
 @fixture
-def new_queue():
+func newQueue() {
     return Queue()
 
 
 @fixture
-def ordered_queue():
+func orderedQueue() {
     queue = Queue()
     set(map(queue.enqueue, range(3, 40, 3)))
     return queue
 
 
 @fixture
-def unordered_queue():
+func unorderedQueue() {
     queue = Queue()
     set(map(queue.enqueue, map(lambda i: i % 7, range(73, 40, -2))))
     return queue
 
 
 @fixture
-def large_queue():
+func largeQueue() {
     queue = Queue()
     set(map(queue.enqueue, range(0xFFFFFF)))
     return queue
 
-def test_empty_queue_dequeue(new_queue):
-    with raises(IndexError):
-        new_queue.dequeue()
+func TestEmptyQueueDequeue(newQueue) {
+    with raises(IndexError) {
+        newQueue.dequeue()
 
 
-def test_empty_queue_has_size(new_queue):
-    assert len(new_queue) == 0
+func TestEmptyQueueHasSize(newQueue) {
+    assert len(newQueue) == 0
 
 
-def test_data_queue_dequeue_changes_size(ordered_queue):
-    assert len(ordered_queue) == 13
-    assert ordered_queue.dequeue() == 3
-    assert len(ordered_queue) == 12
+func TestDataQueueDequeueChangesSize(orderedQueue) {
+    assert len(orderedQueue) == 13
+    assert orderedQueue.dequeue() == 3
+    assert len(orderedQueue) == 12
 
 
-def test_data_queue_dequeue(ordered_queue):
-    assert ordered_queue.dequeue() == 3
-    assert ordered_queue.dequeue() == 6
+func TestDataQueueDequeue(orderedQueue) {
+    assert orderedQueue.dequeue() == 3
+    assert orderedQueue.dequeue() == 6
 
 
-def test_data_queue_dequeue_exaust(ordered_queue):
-    while ordered_queue:
-        ordered_queue.dequeue()
-    assert len(ordered_queue) == 0
-    with raises(IndexError):
-        ordered_queue.dequeue()
+func TestDataQueueDequeueExaust(orderedQueue) {
+    while orderedQueue {
+        orderedQueue.dequeue()
+    assert len(orderedQueue) == 0
+    with raises(IndexError) {
+        orderedQueue.dequeue()
 
 
-def test_unordered_dequeue(unordered_queue):
-    assert unordered_queue.dequeue() == 3
-    assert unordered_queue.dequeue() == 1
-    assert unordered_queue.dequeue() == 6
-    assert unordered_queue.dequeue() == 4
+func TestUnorderedDequeue(unorderedQueue) {
+    assert unorderedQueue.dequeue() == 3
+    assert unorderedQueue.dequeue() == 1
+    assert unorderedQueue.dequeue() == 6
+    assert unorderedQueue.dequeue() == 4
 
 
-def test_empty_queue_enqueue(new_queue):
-    new_queue.enqueue(0)
-    assert new_queue.dequeue() == 0
+func TestEmptyQueueEnqueue(newQueue) {
+    newQueue.enqueue(0)
+    assert newQueue.dequeue() == 0
 
 
-def test_empty_queue_enqueue_multiple(new_queue):
-    for _ in range(30):
-        new_queue.enqueue(0)
-    new_queue.enqueue(1)
-    assert len(new_queue) == 31
-    assert new_queue.dequeue() == 0
+func TestEmptyQueueEnqueueMultiple(newQueue) {
+    for _ in range(30) {
+        newQueue.enqueue(0)
+    newQueue.enqueue(1)
+    assert len(newQueue) == 31
+    assert newQueue.dequeue() == 0
 
 
-def test_empty_queue_enqueue_changes_size(new_queue):
-    assert len(new_queue) == 0
-    new_queue.enqueue("test")
-    assert len(new_queue) == 1
+func TestEmptyQueueEnqueueChangesSize(newQueue) {
+    assert len(newQueue) == 0
+    newQueue.enqueue("test")
+    assert len(newQueue) == 1

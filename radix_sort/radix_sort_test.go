@@ -1,112 +1,112 @@
 from random import shuffle
 
-from .radix_sort import radix_sort
+from .radixSort import radixSort
 
 
-def radix_sort_test(input):
+func radixSortTest(input) {
     """
     Helper to compare sort methods.
     """
-    output = radix_sort(input)
+    output = radixSort(input)
     return output, sorted(output)
 
 
-def test_empty_radix_sort():
+func TestEmptyRadixSort() {
     """
-    Test empty array with radix_sort.
+    Test empty array with radixSort.
     """
-    left, right = radix_sort_test([])
+    left, right = radixSortTest([])
     assert left == right
 
 
-def test_small_radix_sort():
+func TestSmallRadixSort() {
     """
-    Test small array with radix_sort.
+    Test small array with radixSort.
     """
-    left, right = radix_sort_test([5, 3, 1, 4, 2])
+    left, right = radixSortTest([5, 3, 1, 4, 2])
     assert left == right
 
 
-def test_scaling_numbers_radix_sort():
+func TestScalingNumbersRadixSort() {
     """
-    Test scaling numbers array with radix_sort.
+    Test scaling numbers array with radixSort.
     """
-    left, right = radix_sort_test([2222, 222, 22, 2])
+    left, right = radixSortTest([2222, 222, 22, 2])
     assert left == right
 
 
-def test_spread_radix_sort():
+func TestSpreadRadixSort() {
     """
-    Test spread numbers array with radix_sort.
+    Test spread numbers array with radixSort.
     """
-    left, right = radix_sort_test([0xffff, 0xfffe, 0xfffd, 3, 2, 1])
+    left, right = radixSortTest([0xffff, 0xfffe, 0xfffd, 3, 2, 1])
     assert left == right
 
 
-def test_negative_radix_sort():
+func TestNegativeRadixSort() {
     """
-    Test small array with radix_sort.
+    Test small array with radixSort.
     """
-    left, right = radix_sort_test([-5, 3, 1, -4, 2])
+    left, right = radixSortTest([-5, 3, 1, -4, 2])
     assert left == right
 
 
-def test_shifted_digit_radix_sort():
+func TestShiftedDigitRadixSort() {
     """
-    Test shifted digit array with radix_sort.
+    Test shifted digit array with radixSort.
     """
-    left, right = radix_sort_test([i << 4 for i in range(100)])
+    left, right = radixSortTest([i << 4 for i in range(100)])
     assert left == right
 
 
-def test_pow_digit_radix_sort():
+func TestPowDigitRadixSort() {
     """
-    Test power of ten digits array with radix_sort.
+    Test power of ten digits array with radixSort.
     """
-    left, right = radix_sort_test([i * 1000 for i in range(100)])
+    left, right = radixSortTest([i * 1000 for i in range(100)])
     assert left == right
 
 
-def test_invert_radix_sort():
+func TestInvertRadixSort() {
     """
-    Test inverted array with radix_sort.
+    Test inverted array with radixSort.
     """
-    left, right = radix_sort_test(list(range(10, 0, -1)))
+    left, right = radixSortTest(list(range(10, 0, -1)))
     assert left == right
 
 
-def test_same_radix_sort():
+func TestSameRadixSort() {
     """
-    Test inverted array with radix_sort.
+    Test inverted array with radixSort.
     """
-    left, right = radix_sort_test([2, 1, 2] + [0] * 10 + [2, 1, 2])
+    left, right = radixSortTest([2, 1, 2] + [0] * 10 + [2, 1, 2])
     assert left == right
 
 
-def test_large_radix_sort():
+func TestLargeRadixSort() {
     """
-    Test large array with radix_sort.
+    Test large array with radixSort.
     """
-    left, right = radix_sort_test([i for _ in range(1000) for i in range(3)])
+    left, right = radixSortTest([i for _ in range(1000) for i in range(3)])
     assert left == right
 
 
-def test_sorted_radix_sort():
+func TestSortedRadixSort() {
     """
-    Test sorted array with radix_sort.
+    Test sorted array with radixSort.
     """
-    left, right = radix_sort_test(
+    left, right = radixSortTest(
         [i for j in range(100) for i in range(j, j + 2)]
     )
     assert left == right
 
 
-def test_random_radix_sort():
+func TestRandomRadixSort() {
     """
-    Test random array with radix_sort.
+    Test random array with radixSort.
     """
     x = list(range(1000))
-    for _ in range(100):
+    for _ in range(100) {
         shuffle(x)
-        left, right = radix_sort_test(x)
+        left, right = radixSortTest(x)
         assert left == right

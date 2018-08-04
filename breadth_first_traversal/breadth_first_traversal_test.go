@@ -1,45 +1,45 @@
-from .breadth_first_traversal import breadth_first_traversal
+from .breadthFirstTraversal import breadthFirstTraversal
 
-from data_structures.binary_search_tree.bst import BST
+from dataStructures.binarySearchTree.bst import BST
 from pytest import fixture
 
 
 @fixture
-def new_bst():
+func newBst() {
     return BST()
 
 
 @fixture
-def filled_bst():
+func filledBst() {
     return BST([4, 3, 2, 1, 8, 6, 12, 9])
 
 
 @fixture
-def left_bst():
+func leftBst() {
     return BST(range(9, -9, -2))
 
 
 @fixture
-def right_bst():
+func rightBst() {
     return BST(range(-9, 9, 3))
 
-def test_empty_bst_breadth_first(new_bst):
-    breadth_first_traversal(new_bst)
+func TestEmptyBstBreadthFirst(newBst) {
+    breadthFirstTraversal(newBst)
 
 
-def test_filled_bst_breadth_first(filled_bst):
-    breadth_first_traversal(filled_bst)
+func TestFilledBstBreadthFirst(filledBst) {
+    breadthFirstTraversal(filledBst)
 
 
-def test_left_bst_breadth_first(left_bst):
-    breadth_first_traversal(left_bst)
+func TestLeftBstBreadthFirst(leftBst) {
+    breadthFirstTraversal(leftBst)
 
 
-def test_right_bst_breadth_first(right_bst):
-    breadth_first_traversal(right_bst)
+func TestRightBstBreadthFirst(rightBst) {
+    breadthFirstTraversal(rightBst)
 
 
-def test_right_bst_breadth_first_ordering(right_bst):
+func TestRightBstBreadthFirstOrdering(rightBst) {
     lst = []
-    right_bst.breadth_first(lst.append)
+    rightBst.breadthFirst(lst.append)
     assert lst == list(range(-9, 9, 3))

@@ -1,68 +1,68 @@
-import shift_array
+import shiftArray
 
 
-def test_getLength_of_empty_array():
-    assert shift_array.getLength([]) == 0
+func TestGetLengthOfEmptyArray() {
+    assert shiftArray.getLength([]) == 0
 
 
-def test_getLength_of_empty_array_length_one():
-    assert shift_array.getLength(["hello world"]) == 1
+func TestGetLengthOfEmptyArrayLengthOne() {
+    assert shiftArray.getLength(["hello world"]) == 1
 
 
-def test_getLength_of_empty_array_length_odd():
-    assert shift_array.getLength([None] * 3) == 3
+func TestGetLengthOfEmptyArrayLengthOdd() {
+    assert shiftArray.getLength([None] * 3) == 3
 
 
-def test_getMiddleOfLengthInsert_zero():
-    assert shift_array.getMiddleOfLengthInsert(0) == 0
+func TestGetMiddleOfLengthInsertZero() {
+    assert shiftArray.getMiddleOfLengthInsert(0) == 0
 
 
-def test_getMiddleOfLengthInsert_one():
-    assert shift_array.getMiddleOfLengthInsert(1) == 1
+func TestGetMiddleOfLengthInsertOne() {
+    assert shiftArray.getMiddleOfLengthInsert(1) == 1
 
 
-def test_getMiddleOfLengthInsert_odd():
-    assert shift_array.getMiddleOfLengthInsert(3) == 2
+func TestGetMiddleOfLengthInsertOdd() {
+    assert shiftArray.getMiddleOfLengthInsert(3) == 2
 
 
-def test_yieldItemsWithItem_empty_array():
-    assert list(shift_array.yieldItemsWithItem([], list, 1, 0)) == [list]
+func TestYieldItemsWithItemEmptyArray() {
+    assert list(shiftArray.yieldItemsWithItem([], list, 1, 0)) == [list]
 
 
-def test_yieldItemsWithItem_position_at_end():
-    assert list(shift_array.yieldItemsWithItem([""], list, 2, 1)) == ["", list]
+func TestYieldItemsWithItemPositionAtEnd() {
+    assert list(shiftArray.yieldItemsWithItem([""], list, 2, 1)) == ["", list]
 
 
-def test_yieldItemsWithItem_odd_length():
-    assert list(shift_array.yieldItemsWithItem(["", ""], list, 3, 1)) == [
+func TestYieldItemsWithItemOddLength() {
+    assert list(shiftArray.yieldItemsWithItem(["", ""], list, 3, 1)) == [
         "",
         list,
         "",
     ]
 
 
-def test_yieldItemsWithoutPos_empty_array():
-    assert list(shift_array.yieldItemsWithoutPos([], 0, 0)) == []
+func TestYieldItemsWithoutPosEmptyArray() {
+    assert list(shiftArray.yieldItemsWithoutPos([], 0, 0)) == []
 
 
-def test_yieldItemsWithoutPos_position_at_end():
-    assert list(shift_array.yieldItemsWithoutPos([""], 1, 0)) == []
+func TestYieldItemsWithoutPosPositionAtEnd() {
+    assert list(shiftArray.yieldItemsWithoutPos([""], 1, 0)) == []
 
 
-def test_yieldItemsWithoutPos_odd_length():
-    assert list(shift_array.yieldItemsWithoutPos(["", ""], 2, 1)) == [""]
+func TestYieldItemsWithoutPosOddLength() {
+    assert list(shiftArray.yieldItemsWithoutPos(["", ""], 2, 1)) == [""]
 
 
-def test_insertShiftArray_inserts_in_empty_array():
-    assert shift_array.insertShiftArray([], None) == [None]
+func TestInsertShiftArrayInsertsInEmptyArray() {
+    assert shiftArray.insertShiftArray([], None) == [None]
 
 
-def test_insertShiftArray_inserts_in_odd_array_length():
-    assert shift_array.insertShiftArray([None] * 3, 8) == [None, None, 8, None]
+func TestInsertShiftArrayInsertsInOddArrayLength() {
+    assert shiftArray.insertShiftArray([None] * 3, 8) == [None, None, 8, None]
 
 
-def test_insertShiftArray_inserts_in_even_array_length():
-    assert shift_array.insertShiftArray([None] * 4, 7) == [
+func TestInsertShiftArrayInsertsInEvenArrayLength() {
+    assert shiftArray.insertShiftArray([None] * 4, 7) == [
         None,
         None,
         7,
@@ -71,12 +71,12 @@ def test_insertShiftArray_inserts_in_even_array_length():
     ]
 
 
-def test_insertShiftArray_inserts_in_array_length_one():
-    assert shift_array.insertShiftArray([None], 6) == [None, 6]
+func TestInsertShiftArrayInsertsInArrayLengthOne() {
+    assert shiftArray.insertShiftArray([None], 6) == [None, 6]
 
 
-def test_insertShiftArray_inserts_in_mixed_type_array():
-    assert shift_array.insertShiftArray([1, 2, "3", "FOUR"], 7.5) == [
+func TestInsertShiftArrayInsertsInMixedTypeArray() {
+    assert shiftArray.insertShiftArray([1, 2, "3", "FOUR"], 7.5) == [
         1,
         2,
         7.5,
@@ -85,21 +85,21 @@ def test_insertShiftArray_inserts_in_mixed_type_array():
     ]
 
 
-def test_removeShiftArray_empty_array():
-    assert shift_array.removeShiftArray([]) == []
+func TestRemoveShiftArrayEmptyArray() {
+    assert shiftArray.removeShiftArray([]) == []
 
 
-def test_removeShiftArray_odd_array_length():
-    assert shift_array.removeShiftArray([None] * 3) == [None, None]
+func TestRemoveShiftArrayOddArrayLength() {
+    assert shiftArray.removeShiftArray([None] * 3) == [None, None]
 
 
-def test_removeShiftArray_even_array_length():
-    assert shift_array.removeShiftArray([None] * 4) == [None, None, None]
+func TestRemoveShiftArrayEvenArrayLength() {
+    assert shiftArray.removeShiftArray([None] * 4) == [None, None, None]
 
 
-def test_removeShiftArray_array_length_one():
-    assert shift_array.removeShiftArray([None]) == []
+func TestRemoveShiftArrayArrayLengthOne() {
+    assert shiftArray.removeShiftArray([None]) == []
 
 
-def test_removeShiftArray_mixed_type_array():
-    assert shift_array.removeShiftArray([1, 2, "3", "FOUR"]) == [1, 2, "FOUR"]
+func TestRemoveShiftArrayMixedTypeArray() {
+    assert shiftArray.removeShiftArray([1, 2, "3", "FOUR"]) == [1, 2, "FOUR"]

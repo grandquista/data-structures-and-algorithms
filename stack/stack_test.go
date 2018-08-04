@@ -5,89 +5,89 @@ from pytest import fixture
 
 
 @fixture
-def new_stack():
+func newStack() {
     return Stack()
 
 
 @fixture
-def ordered_stack():
+func orderedStack() {
     return Stack(range(3, 40, 3))
 
 
 @fixture
-def unordered_stack():
+func unorderedStack() {
     return Stack(map(lambda i: i % 7, range(73, 40, -2)))
 
 
 @fixture
-def large_stack():
+func largeStack() {
     return Stack("task" for _ in range(0xFFFFFF))
 
-def test_empty_stack_default(new_stack):
-    assert new_stack.head is None
+func TestEmptyStackDefault(newStack) {
+    assert newStack.head is None
 
 
-def test_empty_stack_pop(new_stack):
-    with raises(IndexError):
-        new_stack.pop()
+func TestEmptyStackPop(newStack) {
+    with raises(IndexError) {
+        newStack.pop()
 
 
-def test_empty_stack_peek(new_stack):
-    with raises(IndexError):
-        new_stack.peek()
+func TestEmptyStackPeek(newStack) {
+    with raises(IndexError) {
+        newStack.peek()
 
 
-def test_empty_stack_has_size(new_stack):
-    assert len(new_stack) == 0
+func TestEmptyStackHasSize(newStack) {
+    assert len(newStack) == 0
 
 
-def test_data_stack_pop_changes_size(ordered_stack):
-    assert len(ordered_stack) == 13
-    assert ordered_stack.pop() == 39
-    assert len(ordered_stack) == 12
+func TestDataStackPopChangesSize(orderedStack) {
+    assert len(orderedStack) == 13
+    assert orderedStack.pop() == 39
+    assert len(orderedStack) == 12
 
 
-def test_data_stack_peek_no_mutate(ordered_stack):
-    assert len(ordered_stack) == 13
-    assert ordered_stack.peek() == 39
-    assert len(ordered_stack) == 13
-    assert ordered_stack.peek() == 39
+func TestDataStackPeekNoMutate(orderedStack) {
+    assert len(orderedStack) == 13
+    assert orderedStack.peek() == 39
+    assert len(orderedStack) == 13
+    assert orderedStack.peek() == 39
 
 
-def test_data_stack_pop(ordered_stack):
-    assert ordered_stack.pop() == 39
-    assert ordered_stack.pop() == 36
+func TestDataStackPop(orderedStack) {
+    assert orderedStack.pop() == 39
+    assert orderedStack.pop() == 36
 
 
-def test_data_stack_pop_exaust(ordered_stack):
-    while ordered_stack:
-        ordered_stack.pop()
-    assert len(ordered_stack) == 0
-    with raises(IndexError):
-        ordered_stack.pop()
+func TestDataStackPopExaust(orderedStack) {
+    while orderedStack {
+        orderedStack.pop()
+    assert len(orderedStack) == 0
+    with raises(IndexError) {
+        orderedStack.pop()
 
 
-def test_unordered_pop(unordered_stack):
-    assert unordered_stack.pop() == 6
-    assert unordered_stack.pop() == 1
-    assert unordered_stack.pop() == 3
-    assert unordered_stack.pop() == 5
+func TestUnorderedPop(unorderedStack) {
+    assert unorderedStack.pop() == 6
+    assert unorderedStack.pop() == 1
+    assert unorderedStack.pop() == 3
+    assert unorderedStack.pop() == 5
 
 
-def test_empty_stack_push(new_stack):
-    new_stack.push(0)
-    assert new_stack.head.value == 0
+func TestEmptyStackPush(newStack) {
+    newStack.push(0)
+    assert newStack.head.value == 0
 
 
-def test_empty_stack_push_multiple(new_stack):
-    for _ in range(30):
-        new_stack.push(0)
-    new_stack.push(1)
-    assert len(new_stack) == 31
-    assert new_stack.pop() == 1
+func TestEmptyStackPushMultiple(newStack) {
+    for _ in range(30) {
+        newStack.push(0)
+    newStack.push(1)
+    assert len(newStack) == 31
+    assert newStack.pop() == 1
 
 
-def test_empty_stack_push_changes_size(new_stack):
-    assert len(new_stack) == 0
-    new_stack.push("test")
-    assert len(new_stack) == 1
+func TestEmptyStackPushChangesSize(newStack) {
+    assert len(newStack) == 0
+    newStack.push("test")
+    assert len(newStack) == 1

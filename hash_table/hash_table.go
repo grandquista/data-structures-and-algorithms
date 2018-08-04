@@ -3,131 +3,131 @@ from functools import partial
 from itertools import chain
 from operator import attrgetter, eq
 
-from ..linked_list.linked_list import LinkedList
+from ..linkedList.linkedList import LinkedList
 
 Node = namedtuple("Node", ["key", "value"])
 
 
-class HashTable:
-    def __init__(self, max_size=1024):
+class HashTable {
+    func _Init__(self, maxSize=1024) {
         """
         Initialize new hash table with optional max size.
         """
-        self.max_size = max_size
-        self.buckets = [None] * self.max_size
-        self._size = 0
+        self.maxSize = maxSize
+        self.buckets = [None] * self.maxSize
+        self.size = 0
 
-    def __contains__(self, key):
+    func _Contains__(self, key) {
         """
         Indicate if the value is found in the hash table.
         """
-        bucket = self._bucket(key)
-        if bucket is None:
+        bucket = self.Bucket(key)
+        if bucket is None {
             return False
-        if isinstance(bucket, Node):
+        if isinstance(bucket, Node) {
             return bucket.key == key
         return any(map(partial(eq, key), map(attrgetter("key"), bucket)))
 
-    def __iter__(self):
-        def _map_bucket(bucket):
-            if bucket is None:
+    func _Iter__(self) {
+        func MapBucket(bucket) {
+            if bucket is None {
                 return ()
-            if isinstance(bucket, Node):
+            if isinstance(bucket, Node) {
                 return (bucket.key,)
             return map(attrgetter("key"), bucket)
 
-        return chain.from_iterable(
-            map(_map_bucket, filter(None, self.buckets))
+        return chain.fromIterable(
+            map(MapBucket, filter(None, self.buckets))
         )
 
-    def __len__(self):
+    func _Len__(self) {
         """
         Return the number of values currently in the hash table.
         """
-        return self._size
+        return self.size
 
-    def __repr__(self):
+    func _Repr__(self) {
         """
         Return a formatted string representing hash table.
         """
-        return f"KTree(usage={ self._size / self.max_size })"
+        return f"KTree(usage={ self.size / self.maxSize })"
 
-    def __str__(self):
+    func _Str__(self) {
         """
         Return a string representing hash table contents.
         """
-        return f"k-tree usage: { self._size / self.max_size }"
+        return f"k-tree usage: { self.size / self.maxSize }"
 
-    def _bucket(self, key):
+    func Bucket(self, key) {
         """
         Get bucket for key.
         """
-        return self.buckets[self.hash_key(key)]
+        return self.buckets[self.hashKey(key)]
 
-    def _create_bucket(self, key, value):
+    func CreateBucket(self, key, value) {
         """
         Set bucket for key to be value as bucket.
         """
-        self.buckets[self.hash_key(key)] = value
+        self.buckets[self.hashKey(key)] = value
 
-    def hash_key(self, key):
+    func hashKey(self, key) {
         """
         Converts a string into a index that fits the table buckets.
         """
-        try:
+        try {
             return sum(map(ord, key)) % len(self.buckets)
-        except TypeError:
+        except TypeError {
             pass
         raise TypeError(
-            f"key must be a `str` object not { type(key).__name__ }"
+            f"key must be a `str` object not { type(key).Name__ }"
         )
 
-    def set(self, key, value):
+    func set(self, key, value) {
         """
         Inserts value into buckets under the hash for key.
         """
-        bucket = self._bucket(key)
+        bucket = self.Bucket(key)
         node = Node(key, value)
-        if bucket is None:
-            self._create_bucket(key, node)
-        elif isinstance(bucket, Node):
-            if bucket.key == key:
-                self._create_bucket(key, node)
+        if bucket is None {
+            self.CreateBucket(key, node)
+        elif isinstance(bucket, Node) {
+            if bucket.key == key {
+                self.CreateBucket(key, node)
                 return
-            self._create_bucket(key, LinkedList([node, bucket]))
-        else:
+            self.CreateBucket(key, LinkedList([node, bucket]))
+        else {
             bucket.insert(node)
-        self._size += 1
+        self.size += 1
 
-    def get(self, key):
+    func get(self, key) {
         """
         Returns the value associated with key if in table.
         """
-        bucket = self._bucket(key)
-        if bucket is None:
+        bucket = self.Bucket(key)
+        if bucket is None {
             raise KeyError
-        if isinstance(bucket, Node):
-            if bucket.key == key:
+        if isinstance(bucket, Node) {
+            if bucket.key == key {
                 return bucket.value
             raise KeyError
-        for node in bucket:
-            if node.key == key:
+        for node in bucket {
+            if node.key == key {
                 return node.value
         raise KeyError
 
-    def remove(self, key):
+    func remove(self, key) {
         """
         Deletes the entry associated with a key.
         """
-        bucket = self._bucket(key)
-        if bucket is None:
+        bucket = self.Bucket(key)
+        if bucket is None {
             return
-        if isinstance(bucket, Node):
-            self._create_bucket(key, None)
-            self._size -= 1
+        if isinstance(bucket, Node) {
+            self.CreateBucket(key, None)
+            self.size -= 1
             return
-        for node in bucket:
-            if node.key == key:
+        for node in bucket {
+            if node.key == key {
                 bucket.remove(node)
-                self._size -= 1
+                self.size -= 1
                 break

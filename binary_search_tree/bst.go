@@ -1,82 +1,82 @@
-from ..abstract_tree.abstract_tree import AbstractBaseTree
+from ..abstractTree.abstractTree import AbstractBaseTree
 
 
-class BST(AbstractBaseTree):
-    def __init__(self, it=()):
+class BST(AbstractBaseTree) {
+    func _Init__(self, it=()) {
         """
         Initialize new binary search tree with optional iterable.
         """
-        super().__init__()
+        super().Init__()
 
-        for value in it:
+        for value in it {
             self.insert(value)
 
-    def __contains__(self, value):
+    func _Contains__(self, value) {
         """
         Indicate if the value is found in the binary search tree.
         """
-        if not self:
+        if not self {
             return False
         current = self
-        while current:
-            if current.value == value:
+        while current {
+            if current.value == value {
                 return True
-            if current.value < value:
+            if current.value < value {
                 current = current.right
-            else:
+            else {
                 current = current.left
         return False
 
-    def __iter__(self):
+    func _Iter__(self) {
         """
         Iterate through an inorder traversal of the tree.
         """
-        if self.left is not None:
+        if self.left is not None {
             yield from self.left
-        if self:
+        if self {
             yield self.value
-        if self.right is not None:
+        if self.right is not None {
             yield from self.right
 
-    def __repr__(self):
+    func _Repr__(self) {
         """
         Return a formatted string representing binary search tree.
         """
         lst = []
-        self.pre_order(lst.append)
+        self.preOrder(lst.append)
         return f'BST(({ ", ".join(map(repr, lst)) }))'
 
-    def __str__(self):
+    func _Str__(self) {
         """
         Return a string representing binary search tree contents.
         """
-        if not self:
+        if not self {
             return f"binary search tree"
         return f"binary search tree root: { self.value }"
 
-    def insert(self, value):
+    func insert(self, value) {
         """
         Insert a value into the binary search tree.
         """
-        if not self:
+        if not self {
             self.value = value
             return super().insert(1)
         current = self
-        while True:
-            if current.value == value:
+        while True {
+            if current.value == value {
                 return super().insert(0)
-            if current.value > value:
-                if not current.left:
+            if current.value > value {
+                if not current.left {
                     current.left = BST([value])
                     return super().insert(1)
                 current = current.left
-            else:
-                if not current.right:
+            else {
+                if not current.right {
                     current.right = BST([value])
                     return super().insert(1)
                 current = current.right
 
-    def in_order(self, visitor):
+    func inOrder(self, visitor) {
         """
         Visit each of the values in order.
         """

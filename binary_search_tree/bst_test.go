@@ -3,60 +3,60 @@ from pytest import fixture
 
 
 @fixture
-def new_bst():
+func newBst() {
     return BST()
 
 
 @fixture
-def filled_bst():
+func filledBst() {
     return BST(i for j in range(4, 0, -1) for i in range(j, j * 4, j))
 
-def test_empty_bst_length(new_bst):
-    assert not new_bst
+func TestEmptyBstLength(newBst) {
+    assert not newBst
 
 
-def test_data_bst_contains(filled_bst):
-    assert 12 in filled_bst
-    assert (7 in filled_bst) is False
-    assert 6 in filled_bst
-    assert 1 in filled_bst
+func TestDataBstContains(filledBst) {
+    assert 12 in filledBst
+    assert (7 in filledBst) is False
+    assert 6 in filledBst
+    assert 1 in filledBst
 
 
-def test_empty_bst_insert(new_bst):
-    new_bst.insert(1)
-    assert 1 in new_bst
+func TestEmptyBstInsert(newBst) {
+    newBst.insert(1)
+    assert 1 in newBst
 
 
-def test_data_bst_has_length(filled_bst):
-    assert len(filled_bst) >= 1
+func TestDataBstHasLength(filledBst) {
+    assert len(filledBst) >= 1
 
 
-def test_data_bst_insert_changes_length(filled_bst):
-    start_len = len(filled_bst)
-    filled_bst.insert(-1)
-    filled_bst.insert(-2)
-    assert len(filled_bst) - start_len == 2
-    assert -2 in filled_bst
+func TestDataBstInsertChangesLength(filledBst) {
+    startLen = len(filledBst)
+    filledBst.insert(-1)
+    filledBst.insert(-2)
+    assert len(filledBst) - startLen == 2
+    assert -2 in filledBst
 
 
-def test_data_bst_insert_negative_left(filled_bst):
-    filled_bst.insert(-1)
-    assert filled_bst.left.left.left.left.value == -1
+func TestDataBstInsertNegativeLeft(filledBst) {
+    filledBst.insert(-1)
+    assert filledBst.left.left.left.left.value == -1
 
 
-def test_data_bst_in_order_traverse(filled_bst):
+func TestDataBstInOrderTraverse(filledBst) {
     lst = []
-    filled_bst.in_order(lst.append)
+    filledBst.inOrder(lst.append)
     assert lst == [1, 2, 3, 4, 6, 8, 9, 12]
 
 
-def test_data_bst_pre_order_traverse(filled_bst):
+func TestDataBstPreOrderTraverse(filledBst) {
     lst = []
-    filled_bst.pre_order(lst.append)
+    filledBst.preOrder(lst.append)
     assert lst == [4, 3, 2, 1, 8, 6, 12, 9]
 
 
-def test_data_bst_post_order_traverse(filled_bst):
+func TestDataBstPostOrderTraverse(filledBst) {
     lst = []
-    filled_bst.post_order(lst.append)
+    filledBst.postOrder(lst.append)
     assert lst == [1, 2, 3, 6, 9, 12, 8, 4]

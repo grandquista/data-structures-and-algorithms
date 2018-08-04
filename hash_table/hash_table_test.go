@@ -3,129 +3,129 @@ from pytest import raises
 from itertools import permutations
 from pytest import fixture
 
-from .hash_table import HashTable
+from .hashTable import HashTable
 
 
 @fixture
-def new_hash_table():
+func newHashTable() {
     return HashTable()
 
 
 @fixture
-def filled_hash_table():
-    hash_table = HashTable()
-    hash_table.set("None", 1)
-    hash_table.set("1", 4)
-    hash_table.set("1", 3)
-    hash_table.set("1", 2)
-    hash_table.set("2", 5)
-    hash_table.set("4", 7)
-    hash_table.set("4", 6)
-    hash_table.set("5", 9)
-    hash_table.set("5", 8)
-    return hash_table
+func filledHashTable() {
+    hashTable = HashTable()
+    hashTable.set("None", 1)
+    hashTable.set("1", 4)
+    hashTable.set("1", 3)
+    hashTable.set("1", 2)
+    hashTable.set("2", 5)
+    hashTable.set("4", 7)
+    hashTable.set("4", 6)
+    hashTable.set("5", 9)
+    hashTable.set("5", 8)
+    return hashTable
 
 
 @fixture
-def bad_hash_table():
-    hash_table = HashTable()
-    for i, t in enumerate(permutations("abcde", 4)):
-        hash_table.set("".join(t), i)
-    return hash_table
+func badHashTable() {
+    hashTable = HashTable()
+    for i, t in enumerate(permutations("abcde", 4)) {
+        hashTable.set("".join(t), i)
+    return hashTable
 
-def test_empty_hash_table_length(new_hash_table):
-    assert len(new_hash_table) == 0
-    assert isinstance(new_hash_table.buckets, list)
-
-
-def test_empty_hash_table_get(new_hash_table):
-    with raises(KeyError):
-        new_hash_table.get("")
-    with raises(TypeError):
-        new_hash_table.get(0)
+func TestEmptyHashTableLength(newHashTable) {
+    assert len(newHashTable) == 0
+    assert isinstance(newHashTable.buckets, list)
 
 
-def test_empty_hash_table_insert_repeat(new_hash_table):
-    assert "None" not in new_hash_table
-    new_hash_table.set("None", 0)
-    new_hash_table.set("None", 1)
-    assert "None" in new_hash_table
-    new_hash_table.remove("None")
-    assert "None" not in new_hash_table
-    new_hash_table.remove("None")
-    assert "None" not in new_hash_table
+func TestEmptyHashTableGet(newHashTable) {
+    with raises(KeyError) {
+        newHashTable.get("")
+    with raises(TypeError) {
+        newHashTable.get(0)
 
 
-def test_data_hash_table_contains(filled_hash_table):
-    assert "4" in filled_hash_table
-    assert ("9" in filled_hash_table) is False
-    assert "2" in filled_hash_table
-    assert "1" in filled_hash_table
+func TestEmptyHashTableInsertRepeat(newHashTable) {
+    assert "None" not in newHashTable
+    newHashTable.set("None", 0)
+    newHashTable.set("None", 1)
+    assert "None" in newHashTable
+    newHashTable.remove("None")
+    assert "None" not in newHashTable
+    newHashTable.remove("None")
+    assert "None" not in newHashTable
 
 
-def test_empty_hash_table_set(new_hash_table):
-    new_hash_table.set("None", 1)
-    assert len(new_hash_table) > 0
-    assert "None" in new_hash_table
+func TestDataHashTableContains(filledHashTable) {
+    assert "4" in filledHashTable
+    assert ("9" in filledHashTable) is False
+    assert "2" in filledHashTable
+    assert "1" in filledHashTable
 
 
-def test_data_hash_table_has_length(filled_hash_table):
-    assert len(filled_hash_table) > 0
+func TestEmptyHashTableSet(newHashTable) {
+    newHashTable.set("None", 1)
+    assert len(newHashTable) > 0
+    assert "None" in newHashTable
 
 
-def test_data_hash_table_collision_does_not_update_size(filled_hash_table):
-    start_len = len(filled_hash_table)
-    filled_hash_table.set("1", -1)
-    assert len(filled_hash_table) == start_len
+func TestDataHashTableHasLength(filledHashTable) {
+    assert len(filledHashTable) > 0
 
 
-def test_data_hash_table_remove_fail_does_not_update_size(filled_hash_table):
-    start_len = len(filled_hash_table)
-    filled_hash_table.remove("-1")
-    assert len(filled_hash_table) == start_len
+func TestDataHashTableCollisionDoesNotUpdateSize(filledHashTable) {
+    startLen = len(filledHashTable)
+    filledHashTable.set("1", -1)
+    assert len(filledHashTable) == startLen
 
 
-def test_data_hash_table_set_changes_length(filled_hash_table):
-    start_len = len(filled_hash_table)
-    filled_hash_table.set("11", -1)
-    filled_hash_table.set("12", -2)
-    assert len(filled_hash_table) - start_len == 2
-    assert "12" in filled_hash_table
+func TestDataHashTableRemoveFailDoesNotUpdateSize(filledHashTable) {
+    startLen = len(filledHashTable)
+    filledHashTable.remove("-1")
+    assert len(filledHashTable) == startLen
 
 
-def test_data_hash_table_set_collision_get(filled_hash_table):
-    filled_hash_table.set("12", -2)
-    assert filled_hash_table.get("12") == -2
-    with raises(KeyError):
-        filled_hash_table.get("21")
+func TestDataHashTableSetChangesLength(filledHashTable) {
+    startLen = len(filledHashTable)
+    filledHashTable.set("11", -1)
+    filledHashTable.set("12", -2)
+    assert len(filledHashTable) - startLen == 2
+    assert "12" in filledHashTable
 
 
-def test_data_hash_table_get(filled_hash_table):
-    assert filled_hash_table.get("5") == 8
-    with raises(KeyError):
-        filled_hash_table.get("-1")
+func TestDataHashTableSetCollisionGet(filledHashTable) {
+    filledHashTable.set("12", -2)
+    assert filledHashTable.get("12") == -2
+    with raises(KeyError) {
+        filledHashTable.get("21")
 
 
-def test_data_hash_table_set_negative_left(filled_hash_table):
-    filled_hash_table.set("None", -1)
-    assert "-1" not in filled_hash_table
+func TestDataHashTableGet(filledHashTable) {
+    assert filledHashTable.get("5") == 8
+    with raises(KeyError) {
+        filledHashTable.get("-1")
 
 
-def test_bad_hash_contains(bad_hash_table):
-    assert "abcd" in bad_hash_table
-    assert "edba" in bad_hash_table
+func TestDataHashTableSetNegativeLeft(filledHashTable) {
+    filledHashTable.set("None", -1)
+    assert "-1" not in filledHashTable
 
 
-def test_bad_hash_remove(bad_hash_table):
-    assert "edba" in bad_hash_table
-    bad_hash_table.remove("edba")
-    assert "edba" not in bad_hash_table
-    with raises(KeyError):
-        bad_hash_table.get("edba")
+func TestBadHashContains(badHashTable) {
+    assert "abcd" in badHashTable
+    assert "edba" in badHashTable
 
 
-def test_bad_hash_table_get(bad_hash_table):
-    assert bad_hash_table.get("abcd") == 0
-    assert bad_hash_table.get("edba") == 116
-    with raises(KeyError):
-        bad_hash_table.get("abcde")
+func TestBadHashRemove(badHashTable) {
+    assert "edba" in badHashTable
+    badHashTable.remove("edba")
+    assert "edba" not in badHashTable
+    with raises(KeyError) {
+        badHashTable.get("edba")
+
+
+func TestBadHashTableGet(badHashTable) {
+    assert badHashTable.get("abcd") == 0
+    assert badHashTable.get("edba") == 116
+    with raises(KeyError) {
+        badHashTable.get("abcde")

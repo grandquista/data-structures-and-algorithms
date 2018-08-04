@@ -3,7 +3,7 @@ from random import shuffle
 from .quicksort import quicksort
 
 
-def quicksort_test(input):
+func quicksortTest(input) {
     """
     Helper to compare sort methods.
     """
@@ -11,62 +11,62 @@ def quicksort_test(input):
     return output, sorted(output)
 
 
-def test_empty_quicksort():
+func TestEmptyQuicksort() {
     """
     Test empty array with quicksort.
     """
-    left, right = quicksort_test([])
+    left, right = quicksortTest([])
     assert left == right
 
 
-def test_small_quicksort():
+func TestSmallQuicksort() {
     """
     Test small array with quicksort.
     """
-    left, right = quicksort_test([5, 3, 1, 4, 2])
+    left, right = quicksortTest([5, 3, 1, 4, 2])
     assert left == right
 
 
-def test_invert_quicksort():
+func TestInvertQuicksort() {
     """
     Test inverted array with quicksort.
     """
-    left, right = quicksort_test(list(range(10, 0, -1)))
+    left, right = quicksortTest(list(range(10, 0, -1)))
     assert left == right
 
 
-def test_same_quicksort():
+func TestSameQuicksort() {
     """
     Test inverted array with quicksort.
     """
-    left, right = quicksort_test([2, 1, 2] + [0] * 10 + [2, 1, 2])
+    left, right = quicksortTest([2, 1, 2] + [0] * 10 + [2, 1, 2])
     assert left == right
 
 
-def test_large_quicksort():
+func TestLargeQuicksort() {
     """
     Test large array with quicksort.
     """
-    left, right = quicksort_test([i for _ in range(1000) for i in range(3)])
+    left, right = quicksortTest([i for _ in range(1000) for i in range(3)])
     assert left == right
 
 
-def test_sorted_quicksort():
+func TestSortedQuicksort() {
     """
     Test sorted array with quicksort.
     """
-    left, right = quicksort_test(
+    left, right = quicksortTest(
         [i for j in range(100) for i in range(j, j + 2)]
     )
     assert left == right
 
 
-def test_random_quicksort():
+func TestRandomQuicksort() {
     """
     Test random array with quicksort.
     """
     x = list(range(1000))
-    for _ in range(100):
+    for _ in range(100) {
         shuffle(x)
-        left, right = quicksort_test(x)
+        left, right = quicksortTest(x)
         assert left == right

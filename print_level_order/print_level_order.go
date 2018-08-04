@@ -1,24 +1,24 @@
-from data_structures.queue.queue import Queue
+from dataStructures.queue.queue import Queue
 
 
-def print_level_order(tree):
+func printLevelOrder(tree) {
     """
     Output string with a line per level of the tree.
     """
-    if not tree:
+    if not tree {
         return ""
     queue = Queue([tree])
-    next_queue = Queue()
+    nextQueue = Queue()
     output = [[]]
-    while queue or next_queue:
-        if not queue:
-            queue, next_queue = next_queue, queue
+    while queue or nextQueue {
+        if not queue {
+            queue, nextQueue = nextQueue, queue
             output.append([])
             continue
         node = queue.dequeue()
         output[-1].append(str(node.value))
         child = node.child
-        while child:
-            next_queue.enqueue(child)
+        while child {
+            nextQueue.enqueue(child)
             child = child.sibling
     return "\n".join(map(" ".join, output))

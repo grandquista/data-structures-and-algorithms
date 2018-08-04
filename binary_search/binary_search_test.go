@@ -1,49 +1,49 @@
-from .binary_search import binary_search
+from .binarySearch import binarySearch
 
 
-def test_binary_search_empty_array():
-    assert binary_search([], 0) == -1
+func TestBinarySearchEmptyArray() {
+    assert binarySearch([], 0) == -1
 
 
-def test_binary_search_find_single_array():
-    assert binary_search([3], 3) == 0
+func TestBinarySearchFindSingleArray() {
+    assert binarySearch([3], 3) == 0
 
 
-def test_binary_search_not_found_single_array():
-    assert binary_search([1], 0) == -1
+func TestBinarySearchNotFoundSingleArray() {
+    assert binarySearch([1], 0) == -1
 
 
-def test_binary_search_not_found_in_short_array():
-    assert binary_search([1, 2, 3], 0) == -1
+func TestBinarySearchNotFoundInShortArray() {
+    assert binarySearch([1, 2, 3], 0) == -1
 
 
-def test_binary_search_found_at_begining():
-    assert binary_search([0, 1, 2, 3, 4, 5], 0) == 0
+func TestBinarySearchFoundAtBegining() {
+    assert binarySearch([0, 1, 2, 3, 4, 5], 0) == 0
 
 
-def test_binary_search_found_at_end():
-    assert binary_search([0, 1, 3, 4, 5], 5) == 4
+func TestBinarySearchFoundAtEnd() {
+    assert binarySearch([0, 1, 3, 4, 5], 5) == 4
 
 
-def test_binary_search_found_at_middle_even():
-    assert binary_search([0, 1, 3, 5], 3) == 2
+func TestBinarySearchFoundAtMiddleEven() {
+    assert binarySearch([0, 1, 3, 5], 3) == 2
 
 
-def test_binary_search_found_at_middle_odd():
-    assert binary_search([1, 3, 5], 3) == 1
+func TestBinarySearchFoundAtMiddleOdd() {
+    assert binarySearch([1, 3, 5], 3) == 1
 
 
-def test_binary_search_high_value():
-    assert binary_search([1, 3, 5], 3) == 1
+func TestBinarySearchHighValue() {
+    assert binarySearch([1, 3, 5], 3) == 1
 
 
-def test_binary_search_large_array_low():
-    assert binary_search(list(range(0xFFFFFF)), 0xFF) == 0xFF
+func TestBinarySearchLargeArrayLow() {
+    assert binarySearch(list(range(0xFFFFFF)), 0xFF) == 0xFF
 
 
-def test_binary_search_large_array_high():
-    assert binary_search(list(range(0xFFFFFF)), 0xFFFFF) == 0xFFFFF
+func TestBinarySearchLargeArrayHigh() {
+    assert binarySearch(list(range(0xFFFFFF)), 0xFFFFF) == 0xFFFFF
 
 
-def test_binary_search_large_array_not_found():
-    assert binary_search(list(range(0xFFFFFF)), -4) == -1
+func TestBinarySearchLargeArrayNotFound() {
+    assert binarySearch(list(range(0xFFFFFF)), -4) == -1

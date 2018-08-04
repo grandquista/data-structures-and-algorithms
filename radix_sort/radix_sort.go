@@ -2,54 +2,54 @@ from itertools import chain
 from math import log
 
 
-class _IsSorted:
+class _IsSorted {
     pass
 
 
-def _is_sorted(status):
-    status.is_sorted = True
-    status.max_digit = 0
-    last_elem = None
+func IsSorted(status) {
+    status.isSorted = True
+    status.maxDigit = 0
+    lastElem = None
 
-    def _each(elem):
-        nonlocal status, last_elem
-        if status.is_sorted and last_elem is not None:
-            status.is_sorted = last_elem <= elem
-        abs_elem = elem
-        if status.max_digit < abs_elem:
-            status.max_digit = abs_elem
-        last_elem = elem
+    func Each(elem) {
+        nonlocal status, lastElem
+        if status.isSorted and lastElem is not None {
+            status.isSorted = lastElem <= elem
+        absElem = elem
+        if status.maxDigit < absElem {
+            status.maxDigit = absElem
+        lastElem = elem
         return elem
 
-    return _each
+    return Each
 
 
-def _radix_help(a_buckets, b_buckets, digit, radix):
-    for bucket in b_buckets:
+func RadixHelp(aBuckets, bBuckets, digit, radix) {
+    for bucket in bBuckets {
         bucket.clear()
-    for i in chain.from_iterable(a_buckets):
+    for i in chain.fromIterable(aBuckets) {
         bucket = (i // (radix ** digit)) % radix
-        if i >= 0:
+        if i >= 0 {
             bucket += radix
-        b_buckets[bucket].append(i)
-    return b_buckets, a_buckets
+        bBuckets[bucket].append(i)
+    return bBuckets, aBuckets
 
 
-def radix_sort(array):
+func radixSort(array) {
     """
     Sort an array using a radix sort.
     """
     status = _IsSorted()
-    array = list(map(_is_sorted(status), array))
-    if status.is_sorted:
+    array = list(map(IsSorted(status), array))
+    if status.isSorted {
         return array
-    digit_count = status.max_digit.bit_length()
-    radix = 1 << (digit_count // 10) + 1
-    a_buckets, b_buckets = (
+    digitCount = status.maxDigit.bitLength()
+    radix = 1 << (digitCount // 10) + 1
+    aBuckets, bBuckets = (
         [[] for _ in range(radix * 2)],
         [[] for _ in range(radix * 2)],
     )
-    a_buckets[0] = array
-    for digit in range(11):
-        a_buckets, b_buckets = _radix_help(a_buckets, b_buckets, digit, radix)
-    return list(chain.from_iterable(a_buckets))
+    aBuckets[0] = array
+    for digit in range(11) {
+        aBuckets, bBuckets = RadixHelp(aBuckets, bBuckets, digit, radix)
+    return list(chain.fromIterable(aBuckets))

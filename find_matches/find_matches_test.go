@@ -1,75 +1,75 @@
-from .find_matches import find_matches
+from .findMatches import findMatches
 
-from data_structures.k_tree.k_tree import KTree
+from dataStructures.kTree.kTree import KTree
 from pytest import fixture
 
 
 @fixture
-def new_k_tree():
+func newKTree() {
     return KTree()
 
 
 @fixture
-def filled_k_tree():
-    k_tree = KTree()
-    k_tree.insert(None, 1)
-    k_tree.insert(1, 4)
-    k_tree.insert(1, 3)
-    k_tree.insert(1, 2)
-    k_tree.insert(2, 5)
-    k_tree.insert(4, 7)
-    k_tree.insert(4, 6)
-    k_tree.insert(5, 9)
-    k_tree.insert(5, 8)
-    return k_tree
+func filledKTree() {
+    kTree = KTree()
+    kTree.insert(None, 1)
+    kTree.insert(1, 4)
+    kTree.insert(1, 3)
+    kTree.insert(1, 2)
+    kTree.insert(2, 5)
+    kTree.insert(4, 7)
+    kTree.insert(4, 6)
+    kTree.insert(5, 9)
+    kTree.insert(5, 8)
+    return kTree
 
 
 @fixture
-def non_unique_k_tree():
-    k_tree = KTree()
-    k_tree.insert(None, 2)
-    k_tree.insert(2, 2)
-    k_tree.insert(2, 2)
-    k_tree.insert(2, 2)
-    return k_tree
+func nonUniqueKTree() {
+    kTree = KTree()
+    kTree.insert(None, 2)
+    kTree.insert(2, 2)
+    kTree.insert(2, 2)
+    kTree.insert(2, 2)
+    return kTree
 
 
 @fixture
-def linked_list_k_tree():
-    k_tree = KTree()
-    k_tree.insert(None, 10)
-    k_tree.insert(10, 4)
-    k_tree.insert(4, 3)
-    k_tree.insert(3, 2)
-    k_tree.insert(2, 5)
-    k_tree.insert(5, 7)
-    k_tree.insert(7, 6)
-    k_tree.insert(6, 9)
-    k_tree.insert(9, 8)
-    return k_tree
+func linkedListKTree() {
+    kTree = KTree()
+    kTree.insert(None, 10)
+    kTree.insert(10, 4)
+    kTree.insert(4, 3)
+    kTree.insert(3, 2)
+    kTree.insert(2, 5)
+    kTree.insert(5, 7)
+    kTree.insert(7, 6)
+    kTree.insert(6, 9)
+    kTree.insert(9, 8)
+    return kTree
 
-def extract_values(_in):
-    return [node.value for node in _in]
-
-
-def test_empty_k_tree_find_matches(new_k_tree):
-    assert find_matches(new_k_tree, 1) == []
-    assert find_matches(new_k_tree, "1") == []
-    assert find_matches(new_k_tree, None) == []
+func extractValues(In) {
+    return [node.value for node in In]
 
 
-def test_data_k_tree_find_matches(filled_k_tree):
-    assert extract_values(find_matches(filled_k_tree, 1)) == [1]
-    assert extract_values(find_matches(filled_k_tree, 2)) == [2]
+func TestEmptyKTreeFindMatches(newKTree) {
+    assert findMatches(newKTree, 1) == []
+    assert findMatches(newKTree, "1") == []
+    assert findMatches(newKTree, None) == []
 
 
-def test_list_k_tree_find_matches(linked_list_k_tree):
-    assert extract_values(find_matches(linked_list_k_tree, 3)) == [3]
-    assert extract_values(find_matches(linked_list_k_tree, 10)) == [10]
+func TestDataKTreeFindMatches(filledKTree) {
+    assert extractValues(findMatches(filledKTree, 1)) == [1]
+    assert extractValues(findMatches(filledKTree, 2)) == [2]
 
 
-def test_single_k_tree_find_matches(non_unique_k_tree):
-    assert extract_values(find_matches(non_unique_k_tree, 2)) == [
+func TestListKTreeFindMatches(linkedListKTree) {
+    assert extractValues(findMatches(linkedListKTree, 3)) == [3]
+    assert extractValues(findMatches(linkedListKTree, 10)) == [10]
+
+
+func TestSingleKTreeFindMatches(nonUniqueKTree) {
+    assert extractValues(findMatches(nonUniqueKTree, 2)) == [
         2,
         2,
         2,
@@ -79,4 +79,4 @@ def test_single_k_tree_find_matches(non_unique_k_tree):
         2,
         2,
     ]
-    assert extract_values(find_matches(non_unique_k_tree, 3)) == []
+    assert extractValues(findMatches(nonUniqueKTree, 3)) == []
