@@ -7,34 +7,40 @@ import (
 )
 
 // Queue queue.
-type Queue struct {
-	Head *node.Node
+type Queue interface {
+	Dequeue() (interface{}, error)
+	Enqueue(interface{})
+	Len() int
+}
+
+type queue struct {
+	head *node.Node
 	size int
 }
 
-// MakeQueue Initialize new list with optional iterable.
-func MakeQueue(it []interface{}) *Queue {
-	queue := Queue{}
+// MakeQueue initialize new queue with optional array.
+func MakeQueue(it []interface{}) Queue {
+	q := queue{}
 	for _, elem := range it {
-		queue.Enqueue(elem)
+		q.Enqueue(elem)
 	}
-	return &queue
+	return &q
 }
 
 // Len Return the number of values currently in the queue.
-func (queue Queue) Len() int {
+func (queue queue) Len() int {
 	return queue.size
 }
 
 // Dequeue Retrieve and remove the earliest item from the queue.
-func (queue *Queue) Dequeue() (interface{}, error) {
-	if queue.Head == nil {
+func (queue *queue) Dequeue() (interface{}, error) {
+	if queue.head == nil {
 		return nil, errors.New("empty queue")
 	}
-	node := queue.Head
+	node := queue.head
 	if node.Next == nil {
-		queue.Head = nil
-		queue.size -= 1
+		queue.head = nil
+		queue.size--
 		return node.Value, nil
 	}
 	for node.Next.Next != nil {
@@ -42,12 +48,12 @@ func (queue *Queue) Dequeue() (interface{}, error) {
 	}
 	final := node.Next
 	node.Next = nil
-	queue.size -= 1
+	queue.size--
 	return final.Value, nil
 }
 
 // Enqueue Insert a value into the queue.
-func (queue *Queue) Enqueue(value interface{}) {
-	queue.Head = node.MakeNode(value, queue.Head)
-	queue.size += 1
+func (queue *queue) Enqueue(value interface{}) {
+	queue.head = node.MakeNode(value, queue.head)
+	queue.size++
 }
