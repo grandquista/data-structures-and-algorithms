@@ -1,153 +1,175 @@
 package abstractTree
 
 import (
-  _ "github.com/grandquista/data-structures-and-alorithms/queue"
+	"github.com/grandquista/data-structures-and-algorithms/queue"
 )
 
+// Empty optional value unpacked.
+type emptyOptional struct{}
 
-class EmptyOptional(Exception) {
-    """
-    Empty optional value unpacked.
-    """
+func (emptyOptional) Error() string {
+	return "empty optional"
+}
 
+type poison struct{}
 
-class Optional {
-    """
-    Optional value container.
-    """
+// Optional value container.
+type optional struct {
+	value interface{}
+}
 
-    _POISON = object()
+func makeOptional() optional {
+	return optional{poison{}}
+}
 
-    func _Init__(self, value=_POISON) {
-        self.value = value
+func makeOptionalValue(value interface{}) optional {
+	return optional{value}
+}
 
-    func _Bool__(self) {
-        return self.value is not self.POISON
+func (optional optional) Bool() bool {
+	switch optional.value.(type) {
+	case poison:
+		return false
+	}
+	return true
+}
 
-    func _Repr__(self) {
-        return repr(self.value)
+func (optional optional) Visit(visit func(interface{})) {
+	if optional.Bool() {
+		visit(optional.value)
+	}
+}
 
-    func _Str__(self) {
-        return str(self.value)
+func (optional optional) GetValue() (interface{}, error) {
+	if optional.Bool() {
+		return optional.value, nil
+	}
+	return nil, emptyOptional{}
+}
 
-    func visit(self, v) {
-        if self.value is not self.POISON {
-            return v(self.value)
+func (optional optional) SetValue(value interface{}) {
+	optional.value = value
+}
 
-    @property
-    func value(self) {
-        if self.value is self.POISON {
-            raise EmptyOptional
-        return self.value
+func (optional optional) DeleteValue() {
+	optional.value = poison{}
+}
 
-    @value.setter
-    func value(self, value) {
-        self.value = value
+// AbstractBaseTree abstractTree.
+type AbstractBaseTree interface {
+	Len() int
+	GetValue() (interface{}, error)
+	SetValue(value interface{})
+	DeleteValue()
+	PostOrder(visit func(interface{}))
+	PreOrder(visit func(interface{}))
+}
 
-    @value.deleter
-    func value(self) {
-        self.value = self.POISON
+type abstractBaseTree struct {
+	value optional
+	left  AbstractBaseTree
+	right AbstractBaseTree
+	size  int
+}
 
+// MakeAbstractBaseTree Initialize new tree with optional value and right child.
+func MakeAbstractBaseTree() AbstractBaseTree {
+	return abstractBaseTree{}
+}
 
-class AbstractBaseTree {
-    _Slots__ = ('Value', 'left', 'right', 'Size')
+// MakeAbstractBaseTreeValue Initialize new tree with optional value and right child.
+func MakeAbstractBaseTreeValue(value interface{}) AbstractBaseTree {
+	return abstractBaseTree{value: makeOptionalValue(value), size: 1}
+}
 
-    func _Init__(self, *args) {
-        """
-        Initialize new tree with optional value and right child.
-        """
-        self.value = Optional()
-        if args {
-            self.value.value = args[0]
-        self.left = None
-        self.right = args[1] if len(args) > 1 else None
-        self.size = 1 if self.value else 0
+// Initialize new tree with optional value and right child.
+func makeAbstractBaseTreeValue(value interface{}, right AbstractBaseTree) AbstractBaseTree {
+	return abstractBaseTree{value: makeOptionalValue(value), right: right, size: 1 + right.Len()}
+}
 
-    @property
-    func value(self) {
-        return self.value.value
+func (tree abstractBaseTree) GetValue() (interface{}, error) {
+	return tree.value.GetValue()
+}
 
-    @value.setter
-    func value(self, value) {
-        self.value.value = value
+func (tree abstractBaseTree) SetValue(value interface{}) {
+	tree.value.SetValue(value)
+}
 
-    @value.deleter
-    func value(self) {
-        del self.value.value
+func (tree abstractBaseTree) DeleteValue() {
+	tree.value.DeleteValue()
+}
 
-    func _Contains__(self, value) {
-        """
-        Indicate if the value is found in the tree.
-        """
-        if not self {
-            return False
-        queue = Queue([self])
-        while queue {
-            current = queue.dequeue()
-            while current is not None {
-                if current.left is not None {
-                    queue.enqueue(current.left)
-                if current.value == value {
-                    return True
-                current = current.right
-        return False
+// Indicate if the value is found in the tree.
+func (tree abstractBaseTree) Contains(value interface{}) bool {
+	if tree.size == 0 {
+		return false
+	}
+	queue := queue.MakeQueue([]interface{}{tree})
+	for queue.Len() > 0 {
+		v, _ := queue.Dequeue()
+		tree, _ := v.(*abstractBaseTree)
+		for tree != nil {
+			if tree.left != nil {
+				queue.Enqueue(tree.left)
+			}
+			switch val, _ := tree.GetValue(); val {
+			case value:
+				return true
+			}
+			tree = tree.right.(*abstractBaseTree)
+		}
+	}
+	return false
+}
 
-    func _Len__(self) {
-        """
-        Return the number of values currently in the tree.
-        """
-        return self.size
+// Return the number of values currently in the tree.
+func (tree abstractBaseTree) Len() int {
+	return tree.size
+}
 
-    func _Repr__(self) {
-        """
-        Return a formatted string representing tree.
-        """
-        return 'AbstractBaseTree(...)'
+// Visit each of the values in breadth first order.
+func (tree abstractBaseTree) BreadthFirst(visit func(interface{})) {
+	if tree.size == 0 {
+		return
+	}
+	queue := queue.MakeQueue([]interface{}{tree})
+	for queue.Len() > 0 {
+		v, _ := queue.Dequeue()
+		tree, _ := v.(*abstractBaseTree)
+		for tree != nil {
+			if tree.left != nil {
+				queue.Enqueue(tree.left)
+			}
+			tree.value.Visit(visit)
+			tree = tree.right.(*abstractBaseTree)
+		}
+	}
+}
 
-    func _Str__(self) {
-        """
-        Return a string representing tree contents.
-        """
-        return 'AbstractBaseTree(...)'
+// Update size for count inserts.
+func (tree abstractBaseTree) insert(count int) int {
+	tree.size += count
+	return count
+}
 
-    func breadthFirst(self, visitor) {
-        """
-        Visit each of the values in breadth first order.
-        """
-        if not self {
-            return
-        queue = Queue([self])
-        while queue {
-            current = queue.dequeue()
-            while current is not None {
-                if current.left is not None {
-                    queue.enqueue(current.left)
-                current.value.visit(visitor)
-                current = current.right
+// Visit each of the values in post order.
+func (tree abstractBaseTree) PostOrder(visit func(interface{})) {
+	if tree.left != nil {
+		tree.left.PostOrder(visit)
+	}
+	if tree.right != nil {
+		tree.right.PostOrder(visit)
+	}
+	tree.value.Visit(visit)
+}
 
-    func insert(self, count) {
-        """
-        Update size for count inserts.
-        """
-        self.size += count
-        return count
-
-    func postOrder(self, visitor) {
-        """
-        Visit each of the values in post order.
-        """
-        if self.left is not None {
-            self.left.postOrder(visitor)
-        if self.right is not None {
-            self.right.postOrder(visitor)
-        self.value.visit(visitor)
-
-    func preOrder(self, visitor) {
-        """
-        Visit each of the values in pre order.
-        """
-        self.value.visit(visitor)
-        if self.left is not None {
-            self.left.preOrder(visitor)
-        if self.right is not None {
-            self.right.preOrder(visitor)
+// Visit each of the values in pre order.
+func (tree abstractBaseTree) PreOrder(visit func(interface{})) {
+	tree.value.Visit(visit)
+	if tree.left != nil {
+		tree.left.PostOrder(visit)
+	}
+	if tree.right != nil {
+		tree.right.PostOrder(visit)
+	}
+}
